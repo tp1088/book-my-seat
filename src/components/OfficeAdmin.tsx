@@ -1,7 +1,9 @@
-import { fetchBookings } from "../services/seatServices"
+
 import { useEffect} from "react";
 import React from "react";
 import { DataGrid, GridPaginationModel, GridColDef } from '@mui/x-data-grid';
+import { fetchCurrentBookings } from "../services/seatServices";
+
 
 export const OfficeAdmin = ()=>{
     const [rows, setRows] = React.useState(() => []);
@@ -12,14 +14,13 @@ export const OfficeAdmin = ()=>{
         { field: 'bookingDate', headerName: 'Booking Date', width: 250 }
     ];
     useEffect(() => {
-        setRows(fetchBookings())
+        setRows(fetchCurrentBookings)
     }, [])
     return (
         <div>
             <h1 >Admin</h1>
 
             <DataGrid
-                // disableRowSelectionOnClick checkboxSelection 
                 rows={rows}
                 columns={columns}
             />

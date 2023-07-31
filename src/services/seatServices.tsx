@@ -7,11 +7,27 @@ export interface bookingDetails {
     bookingDate: string
 }
 
-export const fetchBookings = (): any  => {
+export let bookings :Array<any> = [];
+
+export const fetchInitial = (): any  => {
+    bookings = data;
     return data;
 }
 
+export const fetchCurrentBookings = (): any  => {
+    return bookings;
+}
+
 export const submitBooking = (): boolean => {
-    console.log('submitBooking ')
+    let temp :Array<any> = [];
+    bookings.forEach(element => {
+        temp.push(element)
+    });
+    
+    temp.push({
+        "id":bookings.length,
+        "user": "nbdfsjh"+bookings.length
+    })
+    bookings = temp;
     return true;
 }
