@@ -1,11 +1,5 @@
+import { SeatBookingFormData } from '../components/Booking';
 import data from '../resources/data.json'
-
-export interface bookingDetails {
-    user: string,
-    floor: string,
-    seat: string,
-    bookingDate: string
-}
 
 export let bookings :Array<any> = [];
 
@@ -18,7 +12,7 @@ export const fetchCurrentBookings = (): any  => {
     return bookings;
 }
 
-export const submitBooking = (): boolean => {
+export const submitBooking = (form:SeatBookingFormData): boolean => {
     let temp :Array<any> = [];
     bookings.forEach(element => {
         temp.push(element)
@@ -26,7 +20,10 @@ export const submitBooking = (): boolean => {
     
     temp.push({
         "id":bookings.length,
-        "user": "nbdfsjh"+bookings.length
+        "user": form.email,
+        "floor":form.floor,
+        "seat":form.seat,
+        "bookingDate":form.bookingDate
     })
     bookings = temp;
     return true;

@@ -8,7 +8,7 @@ import { fetchCurrentBookings } from "../services/seatServices";
 export const OfficeAdmin = ()=>{
     const [rows, setRows] = React.useState(() => []);
     const columns: GridColDef[] = [
-        { field: 'user', headerName: 'User', width: 150 },
+        { field: 'user', headerName: 'User', width: 250 },
         { field: 'floor', headerName: 'Floor', width: 150 },
         { field: 'seat', headerName: 'Seat', width: 150 },
         { field: 'bookingDate', headerName: 'Booking Date', width: 250 }
@@ -18,7 +18,7 @@ export const OfficeAdmin = ()=>{
     }, [])
     return (
         <div>
-            <h1 >Admin</h1>
+            <h1> Booking Details</h1>
 
             <DataGrid
                 rows={rows}
