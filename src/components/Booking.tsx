@@ -68,6 +68,18 @@ const Booking: React.FC = () => {
         <div className="container">
             <h2>Seat Booking Form</h2>
             <form onSubmit={handleSubmit}>
+            <div className="form-group">
+                    <label htmlFor="bookingDate">Date</label>
+                    <TextField
+                        style={{ width: "250px" }}
+                        type="date"
+                        id="bookingDate"
+                        name="bookingDate"
+                        value={formData.bookingDate}
+                        onChange={handleInputChange}
+                        required
+                    />
+                </div>
                 <div className="form-group">
                     <Autocomplete
                         disablePortal
@@ -82,6 +94,7 @@ const Booking: React.FC = () => {
                 <div className="form-group">
                     <label htmlFor="seat">Seat</label>
                     <Select
+                        style={{ width: "250px" }}
                         id="seat"
                         name="seat"
                         value={formData.seat}
@@ -94,18 +107,6 @@ const Booking: React.FC = () => {
                         <MenuItem value="A2">A2</MenuItem>
                         <MenuItem value="A3">A3</MenuItem>
                     </Select>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="bookingDate">Date</label>
-                    <TextField
-                        style={{ width: "250px" }}
-                        type="date"
-                        id="bookingDate"
-                        name="bookingDate"
-                        value={formData.bookingDate}
-                        onChange={handleInputChange}
-                        required
-                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
