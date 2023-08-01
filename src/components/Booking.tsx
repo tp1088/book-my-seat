@@ -10,7 +10,7 @@ import { Autocomplete } from '@mui/material';
 import { useEffect} from "react";
 
 export interface SeatBookingFormData {
-    floor: number;
+    floor: string;
     seat: string;
     bookingDate: string;
     email: string;
@@ -18,7 +18,7 @@ export interface SeatBookingFormData {
 
 const Booking: React.FC = () => {
     const [formData, setFormData] = useState<SeatBookingFormData>({
-        floor: 0,
+        floor: '',
         seat: '',
         bookingDate: '',
         email: '',
@@ -57,7 +57,7 @@ const Booking: React.FC = () => {
 
         // Reset the form after successful submission
         setFormData({
-            floor: 0,
+            floor: '',
             seat: 'Select a seat',
             bookingDate: '',
             email: '',
@@ -81,15 +81,26 @@ const Booking: React.FC = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <Autocomplete
-                        disablePortal
+                <label htmlFor="seat">Floor</label>
+                    <Select
+                        style={{ width: "250px" }}
                         id="floor"
-                        options={floor}
+                        name="floor"
                         value={formData.floor}
-                        sx={{ width: 250 }}
-                        renderInput={(params) => <TextField {...params} label="Floors"
-                        />}
-                    />
+                        onChange={handleSelectChange}
+                        required
+                        label="Floor"
+                    >
+                        <MenuItem value="" disabled>Select a Floor</MenuItem>
+                        {floor.map((name) => (
+                            <MenuItem
+                                key={name}
+                                value={name}
+                            >
+                                {name}
+                            </MenuItem>
+                        ))}
+                    </Select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="seat">Seat</label>
