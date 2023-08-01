@@ -27,7 +27,7 @@ const Booking: React.FC = () => {
     let floors :Array<any> = [];
 
     const [floor, setFloors] = useState(() => []);
- 
+
     useEffect(() => {
         setFloors(fetchMetaData)
     }, [])
@@ -71,12 +71,12 @@ const Booking: React.FC = () => {
                 <div className="form-group">
                     <Autocomplete
                         disablePortal
-                        id="combo-box-demo"
+                        id="floor"
                         options={floor}
-
+                        value={formData.floor}
                         sx={{ width: 250 }}
                         renderInput={(params) => <TextField {...params} label="Floors"
-                             />}
+                        />}
                     />
                 </div>
                 <div className="form-group">
@@ -98,6 +98,7 @@ const Booking: React.FC = () => {
                 <div className="form-group">
                     <label htmlFor="bookingDate">Date</label>
                     <TextField
+                        style={{ width: "250px" }}
                         type="date"
                         id="bookingDate"
                         name="bookingDate"
@@ -109,6 +110,7 @@ const Booking: React.FC = () => {
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
                     <TextField
+                        style={{ width: "250px" }}
                         type="email"
                         id="email"
                         name="email"
