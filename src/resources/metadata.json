@@ -1,0 +1,53 @@
+[
+    {
+        "floorID": "F1",
+        "seats": [
+            {
+                "seatID": "S1",
+                "isSelected": false
+            },
+            {
+                "seatID": "S2",
+                "isSelected": false
+            },
+            {
+                "seatID": "S3",
+                "isSelected": false
+            }
+        ]
+    },
+    {
+        "floorID": "F2",
+        "seats": [
+            {
+                "seatID": "S1",
+                "isSelected": false
+            },
+            {
+                "seatID": "S2",
+                "isSelected": false
+            },
+            {
+                "seatID": "S3",
+                "isSelected": false
+            }
+        ]
+    },
+    {
+        "floorID": "F3",
+        "seats": [
+            {
+                "seatID": "S1",
+                "isSelected": false
+            },
+            {
+                "seatID": "S2",
+                "isSelected": false
+            },
+            {
+                "seatID": "S3",
+                "isSelected": false
+            }
+        ]
+    }
+]

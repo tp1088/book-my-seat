@@ -1,11 +1,21 @@
 import { SeatBookingFormData } from '../components/Booking';
 import data from '../resources/data.json'
+import metadata from '../resources/metadata.json'
 
 export let bookings :Array<any> = [];
 
 export const fetchInitial = (): any  => {
     bookings = data;
     return data;
+}
+
+export const fetchMetaData = (): any  => {
+    let f :Array<any> = [];
+        metadata.forEach(mData => {
+            console.log(mData)
+            f.push(mData.floorID)
+        });
+    return f;
 }
 
 export const fetchCurrentBookings = (): any  => {
