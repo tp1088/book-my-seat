@@ -11,7 +11,7 @@ export const AppHeader = () => {
   return (
     <header className="bg-black text-white flex justify-between h-14 items-center px-4">
       <div>
-        <Link className="hover:bg-sky-700" to={"booking"}>
+        <Link className="hover:bg-sky-700 text" to={"booking"}>
           Book-my-seat
         </Link>
       </div>
