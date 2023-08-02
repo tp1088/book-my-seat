@@ -1,3 +1,14 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url("./146876.jpg");
+    background-size: cover;
+    background-position: center;
+}
 
 .wrapper {
     display: flex;
@@ -7,6 +18,8 @@
 }
 
 .container {
+    opacity: 80%;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
