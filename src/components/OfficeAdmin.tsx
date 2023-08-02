@@ -1,8 +1,8 @@
-
 import { useEffect} from "react";
 import React from "react";
 import { DataGrid, GridPaginationModel, GridColDef } from '@mui/x-data-grid';
 import { fetchCurrentBookings } from "../services/seatServices";
+import './OfficeAdmin.css';
 
 
 export const OfficeAdmin = ()=>{
@@ -17,7 +17,7 @@ export const OfficeAdmin = ()=>{
         setRows(fetchCurrentBookings)
     }, [])
     return (
-        <div>
+        <div className="container">
             <h1> Booking Details</h1>
 
             <DataGrid
