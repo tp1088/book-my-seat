@@ -5,9 +5,10 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './BookingScreen.css';
-import { fetchMetaData, submitBooking } from '../services/seatServices';
+import { fetchMetaData, fetchSeatsMetaData, submitBooking } from '../services/seatServices';
 import { Autocomplete } from '@mui/material';
 import { useEffect} from "react";
+import { setFlagsFromString } from 'v8';
 
 export interface SeatBookingFormData {
     floor: string;
@@ -27,10 +28,12 @@ const Booking: React.FC = () => {
     let floors :Array<any> = [];
 
     const [floor, setFloors] = useState(() => []);
+    const [seat, setSeats] = useState(()=> []);
 
     useEffect(() => {
         setFloors(fetchMetaData)
-    }, [])
+        setSeats(fetchSeatsMetaData(formData.floor))
+    },[floor, setFloors])
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -114,9 +117,14 @@ const Booking: React.FC = () => {
                         label="Seat"
                     >
                         <MenuItem value="" disabled>Select a seat</MenuItem>
-                        <MenuItem value="A1">A1</MenuItem>
-                        <MenuItem value="A2">A2</MenuItem>
-                        <MenuItem value="A3">A3</MenuItem>
+                        {seat.map((name) => (
+                            <MenuItem
+                                key={name}
+                                value={name}
+                            >
+                                {name}
+                            </MenuItem>
+                        ))}
                     </Select>
                 </div>
                 <div className="form-group">
