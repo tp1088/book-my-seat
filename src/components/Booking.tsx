@@ -69,7 +69,7 @@ const Booking: React.FC = () => {
 
     return (
         <div className="container bg-slate-200 opacity-90">
-            <h2>Seat Booking Form</h2>
+            <h2 className = 'text-xl font-semibold'>Seat Booking Form</h2>
             <form onSubmit={handleSubmit}>
             <div className="form-group">
                     <label htmlFor="bookingDate">Date</label>

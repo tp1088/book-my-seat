@@ -17,7 +17,7 @@ export const OfficeAdmin = () => {
   }, []);
   return (
     <div>
-      <h1 className="text-3xl mb-5"> Booking Details</h1>
+      <h1 className="text-3xl mb-5  font-semibold"> Booking Details</h1>
       <div className="w-2/3 m-auto bg-slate-50 opacity-90">
         <DataGrid rows={rows} columns={columns} />
       </div>
