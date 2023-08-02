@@ -1,33 +1,56 @@
 import { SeatBookingFormData } from '../components/Booking';
 import data from '../resources/data.json'
-import metadata from '../resources/metadata.json'
+import meta from '../resources/metadata.json'
 
-export let bookings :Array<any> = [];
+
+export interface MetaData {
+    floorID: string;
+    seats: Array<Seat>;
+}
+export interface Seat {
+    seatID: string;
+    isSelected: boolean;
+}
+
+export let bookings :Array<SeatBookingFormData> = [];
+export let metadata :Array<MetaData> = [];
 
 export const fetchInitial = (): any  => {
     bookings = data;
+    metadata = meta;
     return data;
 }
 
+export const setFloorsforDob = (dob:String): any => {
+    bookings.forEach(booking => {
+        if(booking.bookingDate == dob){
+           let mData =  metadata.find(m =>{
+               return m.floorID === booking.floor
+            })
+            mData?.seats.forEach(seat => {
+                if(seat.seatID === booking.seat){
+                    seat.isSelected = true;
+                }
+            });
+        }
+    });
+}
 export const fetchMetaData = (): any  => {
     let f :Array<any> = [];
     metadata.forEach(mData => {
-            // console.log(mData)
         f.push(mData.floorID)
     });
     return f;
 }
 
 export const fetchSeatsMetaData = (floor:String): any  => {
-    let f :Array<any> = [];
+    let f: Array<any> = [];
     metadata.forEach(mData => {
-        mData.seats.forEach(s=>{
-            if(mData.floorID===floor)
-            {
-                if(!s.isSelected)
-                    {f.push(s.seatID)}                
-            }
-            }); 
+        if (mData.floorID === floor) {
+            mData.seats.forEach(s => {
+                if (!s.isSelected) { f.push(s.seatID) }
+            });
+        }
     });
     return f;
 }
@@ -44,7 +67,7 @@ export const submitBooking = (form:SeatBookingFormData): boolean => {
     
     temp.push({
         "id":bookings.length,
-        "user": form.email,
+        "email": form.email,
         "floor":form.floor,
         "seat":form.seat,
         "bookingDate":form.bookingDate

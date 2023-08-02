@@ -5,12 +5,13 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './BookingScreen.css';
-import { fetchMetaData, fetchSeatsMetaData, submitBooking } from '../services/seatServices';
+import { fetchMetaData, fetchSeatsMetaData, setFloorsforDob, submitBooking } from '../services/seatServices';
 import { Autocomplete } from '@mui/material';
 import { useEffect} from "react";
 import { setFlagsFromString } from 'v8';
 
 export interface SeatBookingFormData {
+    id?:number;
     floor: string;
     seat: string;
     bookingDate: string;
@@ -35,9 +36,15 @@ const Booking: React.FC = () => {
         setSeats(fetchSeatsMetaData(formData.floor))
     },[floor, setFloors])
 
+
+    const setDataForDob = (dobEntered:string) =>{
+        setFloorsforDob(dobEntered)
+    }
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+        setDataForDob(value)
     };
 
     const handleSelectChange = (e: SelectChangeEvent<string>) => {
