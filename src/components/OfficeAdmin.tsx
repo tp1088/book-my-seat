@@ -16,9 +16,9 @@ export const OfficeAdmin = () => {
     setRows(fetchCurrentBookings);
   }, []);
   return (
-    <div>
-      <h1 className="text-3xl mb-5"> Booking Details</h1>
-      <div className="w-2/3 m-auto">
+    <div >
+      <h1 className="text-3xl mb-5 "> Booking Details</h1>
+      <div className="w-2/3 m-auto bg-gray-300 opacity-90">
         <DataGrid rows={rows} columns={columns} />
       </div>
     </div>

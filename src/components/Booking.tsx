@@ -68,7 +68,7 @@ const Booking: React.FC = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container opacity-90">
             <h2>Seat Booking Form</h2>
             <form onSubmit={handleSubmit}>
             <div className="form-group">
