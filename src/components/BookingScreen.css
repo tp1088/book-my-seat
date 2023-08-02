@@ -1,0 +1,94 @@
+/* BookingScreen.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url("./146876.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  /* Align form fields vertically */
+  align-items: center;
+  /* Center the form fields horizontally */
+  justify-content: center;
+  /* Center the container vertically */
+  min-height: 50vh;
+  /* Set minimum height to fill the viewport */
+  background-color: #fff;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Align form fields vertically */
+  align-items: flex-start;
+  /* Align labels and fields to the left */
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  /* Add margin below the label */
+}
+
+input[type="number"],
+input[type="date"],
+input[type="email"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+select {
+  cursor: pointer;
+}
+
+.helper-text {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
