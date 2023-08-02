@@ -1,38 +1,17 @@
-import { Link, NavLink } from "react-router-dom";
-import "../App.css";
-import { useEffect } from "react";
+import { useNavigate, Link, Outlet } from "react-router-dom";
+import '../App.css';
+import React, { useEffect } from "react";
 import { fetchInitial } from "../services/seatServices";
 
 export const AppHeader = () => {
-  useEffect(() => {
-    fetchInitial();
-  }, []);
-  const style = "hover:bg-sky-700 hover:h-14 mx-4";
-  return (
-    <header className="bg-black text-white flex justify-between h-14 items-center px-4">
-      <div>
-        <Link className="hover:bg-sky-700" to={"booking"}>
-          Book-my-seat
-        </Link>
-      </div>
-      <nav>
-        <NavLink
-          className={({ isActive, isPending }) =>
-            isActive ? `text-xl  font-bold ${style} ` : `${style}`
-          }
-          to={"booking"}
-        >
-          Booking
-        </NavLink>
-        <NavLink
-          className={({ isActive, isPending }) =>
-            isActive ? `text-xl font-bold ${style} ` : `${style}`
-          }
-          to={"admin"}
-        >
-          Office Admin
-        </NavLink>
-      </nav>
-    </header>
-  );
-};
+    useEffect(() => {
+        fetchInitial()
+    }, [])
+    return (
+        <div className="header">
+            <Link className="tab" to={'Booking'}  >Booking</Link>
+            <Link className="tab" to={'admin'} >Office Admin</Link>
+            <Outlet />
+        </div>
+    )
+}
