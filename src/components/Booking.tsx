@@ -9,6 +9,7 @@ import { fetchMetaData, fetchSeatsMetaData, setFloorsforDob, submitBooking } fro
 import { Autocomplete } from '@mui/material';
 import { useEffect} from "react";
 import { setFlagsFromString } from 'v8';
+import { bookings } from '../services/seatServices';
 
 export interface SeatBookingFormData {
     id?:number;
@@ -30,6 +31,9 @@ const Booking: React.FC = () => {
 
     const [floor, setFloors] = useState(() => []);
     const [seat, setSeats] = useState(()=> []);
+    const [SeatAvlbl, setSeatAvlbl] = useState(() => true);
+    const [SeatAvlblusingDate, setSeatAvlblusingDate] =useState(()=>true);
+    const [Bdisabled,setDisabled] = useState(() => true);
 
     useEffect(() => {
         setFloors(fetchMetaData)
@@ -39,6 +43,36 @@ const Booking: React.FC = () => {
 
     const setDataForDob = (dobEntered:string) =>{
         setFloorsforDob(dobEntered)
+    }
+    //Validating that if all seats are booked, If booked then throwing a msg stating "No seats are available"
+    const ValidateSeat =():any =>{
+
+        console.log(seat.length)
+        if(seat.length === 0)
+        {
+            setSeatAvlbl(false)
+            setDisabled(true)
+        }
+        else{
+            setSeatAvlbl(true)
+            setDisabled(false)
+        }
+
+    }
+
+    //Checking if the seat booking is done by the same user
+    const ValidateSeatwithDate =():any =>{
+        setSeatAvlblusingDate(true)
+        setDisabled(false)
+        bookings.forEach(sdata =>{
+           console.error(sdata.email)
+           console.error(sdata.bookingDate)
+            if(formData.email == sdata.email && formData.bookingDate == sdata.bookingDate)
+            {
+                setSeatAvlblusingDate(false)
+                setDisabled(true)
+            }
+        })
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +110,7 @@ const Booking: React.FC = () => {
 
     return (
         <div className="container bg-slate-200 opacity-90">
-            <h2 className = 'text-xl font-semibold'>Seat Booking Form</h2>
+            <h2 className = 'text-xl font-semibold'>Book Your Seat</h2>
             <form onSubmit={handleSubmit}>
             <div className="form-group">
                     <label htmlFor="bookingDate">Date</label>
@@ -87,6 +121,7 @@ const Booking: React.FC = () => {
                         name="bookingDate"
                         value={formData.bookingDate}
                         onChange={handleInputChange}
+                        onBlur={ValidateSeatwithDate}
                         required
                     />
                 </div>
@@ -98,6 +133,7 @@ const Booking: React.FC = () => {
                         name="floor"
                         value={formData.floor}
                         onChange={handleSelectChange}
+                        onBlur={ValidateSeat}
                         required
                         label="Floor"
                     >
@@ -111,6 +147,14 @@ const Booking: React.FC = () => {
                             </MenuItem>
                         ))}
                     </Select>
+                    <div>
+                        {
+                            !SeatAvlbl ? <h5 style={{color : 'red'}}>No seats are available</h5> : null
+                        }
+                        {
+                            !SeatAvlblusingDate ? <h5 style={{color : 'red'}}>You have already booked Seat</h5> : null
+                        }
+                    </div>
                 </div>
                 <div className="form-group">
                     <label htmlFor="seat">Seat</label>
@@ -143,11 +187,11 @@ const Booking: React.FC = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleInputChange}
-                        required
+                        onBlur={ValidateSeatwithDate}
                     />
                 </div>
                 <div className="form-group">
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button type="submit" variant="contained" color="primary" disabled={Bdisabled}>
                         Submit
                     </Button>
                 </div>
