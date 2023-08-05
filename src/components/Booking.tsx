@@ -6,10 +6,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import './BookingScreen.css';
 import { fetchMetaData, fetchSeatsMetaData, setFloorsforDob, submitBooking } from '../services/seatServices';
-import { Autocomplete } from '@mui/material';
+import { Snackbar, SnackbarOrigin } from '@mui/material';
 import { useEffect} from "react";
-import { setFlagsFromString } from 'v8';
 import { bookings } from '../services/seatServices';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 export interface SeatBookingFormData {
     id?:number;
@@ -18,6 +18,13 @@ export interface SeatBookingFormData {
     bookingDate: string;
     email: string;
 }
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const Booking: React.FC = () => {
     const [formData, setFormData] = useState<SeatBookingFormData>({
@@ -34,20 +41,21 @@ const Booking: React.FC = () => {
     const [SeatAvlbl, setSeatAvlbl] = useState(() => true);
     const [SeatAvlblusingDate, setSeatAvlblusingDate] =useState(()=>true);
     const [Bdisabled,setDisabled] = useState(() => true);
+    const minDate = new Date ().toISOString ().substring (0, 10);
 
     useEffect(() => {
-        setFloors(fetchMetaData)
+        // setFloors(fetchMetaData)
         setSeats(fetchSeatsMetaData(formData.floor))
     },[floor, setFloors])
 
 
     const setDataForDob = (dobEntered:string) =>{
         setFloorsforDob(dobEntered)
+        setFloors(fetchMetaData)
     }
     //Validating that if all seats are booked, If booked then throwing a msg stating "No seats are available"
     const ValidateSeat =():any =>{
-
-        console.log(seat.length)
+        setSeats(fetchSeatsMetaData(formData.floor))
         if(seat.length === 0)
         {
             setSeatAvlbl(false)
@@ -65,8 +73,6 @@ const Booking: React.FC = () => {
         setSeatAvlblusingDate(true)
         setDisabled(false)
         bookings.forEach(sdata =>{
-           console.error(sdata.email)
-           console.error(sdata.bookingDate)
             if(formData.email == sdata.email && formData.bookingDate == sdata.bookingDate)
             {
                 setSeatAvlblusingDate(false)
@@ -95,9 +101,7 @@ const Booking: React.FC = () => {
         }
 
         submitBooking(formData)
-        alert(
-            `Form submitted successfully!\nFloor: ${formData.floor}\nSeat: ${formData.seat}\nDate: ${formData.bookingDate}\nEmail: ${formData.email}`
-        );
+        handleOpen({ vertical: 'top', horizontal: 'center' });
 
         // Reset the form after successful submission
         setFormData({
@@ -108,9 +112,43 @@ const Booking: React.FC = () => {
         });
     };
 
+    // Alert state
+    interface AlertState extends SnackbarOrigin {
+        open: boolean;
+      }
+
+    const [alertState, setAlertState] = React.useState<AlertState>({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
+      });
+
+    const { vertical, horizontal, open } = alertState;
+
+    const handleOpen = (newState: SnackbarOrigin) => {
+        setAlertState({ ...newState, open: true });
+    };
+
+    const handleClose = (event: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setAlertState({ ...alertState, open: false });
+    };
+
     return (
         <div className="container bg-slate-200 opacity-90">
             <h2 className = 'text-xl font-semibold'>Book Your Seat</h2>
+            {/* Alert bar */}
+            <div>
+                <Snackbar anchorOrigin={{ vertical, horizontal }}
+                    open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                        Seat is booked successfully!
+                    </Alert>
+                </Snackbar>
+            </div>
             <form onSubmit={handleSubmit}>
             <div className="form-group">
                     <label htmlFor="bookingDate">Date</label>
@@ -123,6 +161,9 @@ const Booking: React.FC = () => {
                         onChange={handleInputChange}
                         onBlur={ValidateSeatwithDate}
                         required
+                        inputProps={{
+                            min: minDate
+                          }}
                     />
                 </div>
                 <div className="form-group">
